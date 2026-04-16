@@ -71,13 +71,13 @@ function initAnimations() {
         gsap.to(el, {
             scrollTrigger: {
                 trigger: el,
-                start: 'top 85%',
+                start: 'top 92%',
                 toggleActions: 'play none none none'
             },
             opacity: 1,
             y: 0,
-            duration: 1.2,
-            ease: 'power3.out'
+            duration: 0.7,
+            ease: 'power2.out'
         });
     });
 
