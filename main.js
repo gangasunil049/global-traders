@@ -67,18 +67,18 @@ function initAnimations() {
         .to('.hero-content .flex', { opacity: 1, y: 0, duration: 0.8, ease: 'power4.out' }, '-=0.6');
 
     // Scroll Reveal Animations
-    gsap.utils.toArray('.scroll-reveal').forEach((el) => {
-        gsap.to(el, {
-            scrollTrigger: {
-                trigger: el,
-                start: 'top 92%',
-                toggleActions: 'play none none none'
-            },
+    // Improved Scroll Reveal Animations with batching for performance
+    ScrollTrigger.batch('.scroll-reveal', {
+        start: 'top 94%',
+        onEnter: batch => gsap.to(batch, {
             opacity: 1,
             y: 0,
-            duration: 0.7,
-            ease: 'power2.out'
-        });
+            duration: 0.5,
+            stagger: 0.15,
+            ease: 'power2.out',
+            overwrite: true
+        }),
+        once: true
     });
 
     // Masonry items reveal

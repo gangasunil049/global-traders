@@ -93,17 +93,7 @@ header.scrolled .logo {
   height: 60px;
   width: auto;
   object-fit: contain;
-  -webkit-mask-image: url('/logo.png');
-  mask-image: url('/logo.png');
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  /* Use the luminance of the logo as the mask alpha */
-  mask-type: luminance;
-  -webkit-mask-mode: luminance;
-  mask-mode: luminance;
-  background: #ffffff; /* This will be the color of the logo */
+  mix-blend-mode: screen;
 }
 
 .nav-links {
@@ -201,7 +191,7 @@ header.scrolled .logo {
   text-align: center;
   border-radius: 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background 0.4s ease, border-color 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   height: 100%;
 }
 
@@ -339,6 +329,7 @@ header.scrolled .logo {
 .scroll-reveal {
   opacity: 0;
   transform: translateY(30px);
+  will-change: transform, opacity;
 }
 
 /* Tailwind-ish Utilities (since user didn't ask for Tailwind but we need layout) */
