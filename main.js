@@ -126,7 +126,7 @@ function initHeaderScroll() {
         const iconInside = menuToggle.querySelector('i, svg');
         if (iconInside) iconInside.style.pointerEvents = 'none';
 
-        menuToggle.addEventListener('click', (e) => {
+        const toggleMenu = (e) => {
             e.stopPropagation();
             e.preventDefault();
             navLinks.classList.toggle('open');
@@ -139,15 +139,20 @@ function initHeaderScroll() {
                     icon.setAttribute('class', 'fas fa-bars');
                 }
             }
-        });
+        };
+
+        menuToggle.addEventListener('click', toggleMenu);
+        menuToggle.addEventListener('touchstart', toggleMenu, { passive: false });
 
         // Close menu when a link is clicked
         navLinks.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
+            const closeMenu = () => {
                 navLinks.classList.remove('open');
                 const icon = menuToggle.querySelector('i, svg');
                 if (icon) icon.setAttribute('class', 'fas fa-bars');
-            });
+            };
+            link.addEventListener('click', closeMenu);
+            link.addEventListener('touchstart', closeMenu, { passive: true });
         });
 
         // Close menu when clicking outside
