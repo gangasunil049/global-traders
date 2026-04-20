@@ -1,11 +1,11 @@
-// Import GSAP and Three.js are already in HTML via CDN for simplicity in this environment
-// but we'll use them here.
-
 document.addEventListener('DOMContentLoaded', () => {
+    // Priority 1: Navigation & Mobile Menu (Must work on all pages)
+    initHeaderScroll();
+    
+    // Priority 2: Page-specific features
     initAnimations();
     initGlobe();
     initHeroBackground();
-    initHeaderScroll();
     initTradeLines();
 });
 
@@ -57,6 +57,9 @@ function initTradeLines() {
 }
 
 function initAnimations() {
+    const isGSAPLoaded = typeof gsap !== 'undefined';
+    if (!isGSAPLoaded) return;
+    
     gsap.registerPlugin(ScrollTrigger);
 
     // Hero Animations
@@ -67,7 +70,6 @@ function initAnimations() {
         .to('.hero-content .flex', { opacity: 1, y: 0, duration: 0.8, ease: 'power4.out' }, '-=0.6');
 
     // Scroll Reveal Animations
-    // Improved Scroll Reveal Animations with batching for performance
     ScrollTrigger.batch('.scroll-reveal', {
         start: 'top 94%',
         onEnter: batch => gsap.to(batch, {
@@ -94,7 +96,6 @@ function initAnimations() {
             delay: i % 3 * 0.2
         });
     });
-
 }
 
 function initHeaderScroll() {
@@ -102,7 +103,11 @@ function initHeaderScroll() {
     const menuToggle = document.getElementById('menu-toggle');
     const navLinks = document.querySelector('.nav-links');
 
-    const isHomePage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '/GLOBAL%20TRADERS/' || window.location.pathname.includes('index.html');
+    if (!header) return;
+
+    const isHomePage = window.location.pathname.endsWith('index.html') || 
+                       window.location.pathname === '/' || 
+                       window.location.pathname.includes('index.html');
 
     if (!isHomePage) {
         header.classList.add('scrolled');
@@ -111,24 +116,27 @@ function initHeaderScroll() {
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50 || !isHomePage) {
             header.classList.add('scrolled');
-        } else {
+        } else if (isHomePage) {
             header.classList.remove('scrolled');
         }
     });
 
     if (menuToggle && navLinks) {
+        // Ensure the button itself is the click target
+        const iconInside = menuToggle.querySelector('i, svg');
+        if (iconInside) iconInside.style.pointerEvents = 'none';
+
         menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
             e.preventDefault();
             navLinks.classList.toggle('open');
-            // Support both <i> and FontAwesome's <svg> replacement
+            
             const icon = menuToggle.querySelector('i, svg');
             if (icon) {
                 if (navLinks.classList.contains('open')) {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-times');
+                    icon.setAttribute('class', 'fas fa-times');
                 } else {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
+                    icon.setAttribute('class', 'fas fa-bars');
                 }
             }
         });
@@ -138,22 +146,18 @@ function initHeaderScroll() {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('open');
                 const icon = menuToggle.querySelector('i, svg');
-                if (icon) {
-                    icon.classList.add('fa-bars');
-                    icon.classList.remove('fa-times');
-                }
+                if (icon) icon.setAttribute('class', 'fas fa-bars');
             });
         });
 
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
-            if (!menuToggle.contains(e.target) && !navLinks.contains(e.target) && navLinks.classList.contains('open')) {
+            if (navLinks.classList.contains('open') && 
+                !menuToggle.contains(e.target) && 
+                !navLinks.contains(e.target)) {
                 navLinks.classList.remove('open');
                 const icon = menuToggle.querySelector('i, svg');
-                if (icon) {
-                    icon.classList.add('fa-bars');
-                    icon.classList.remove('fa-times');
-                }
+                if (icon) icon.setAttribute('class', 'fas fa-bars');
             }
         });
     }
