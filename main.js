@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initGlobe();
     initHeroBackground();
     initTradeLines();
+    initWorldMapZoom();
 });
 
 function initTradeLines() {
@@ -134,26 +135,17 @@ function initHeaderScroll() {
             const icon = menuToggle.querySelector('i, svg');
             if (icon) {
                 if (navLinks.classList.contains('open')) {
-                    icon.setAttribute('class', 'fas fa-times');
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
                 } else {
-                    icon.setAttribute('class', 'fas fa-bars');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
                 }
             }
         };
 
         menuToggle.addEventListener('click', toggleMenu);
         menuToggle.addEventListener('touchstart', toggleMenu, { passive: false });
-
-        // Close menu when a link is clicked
-        navLinks.querySelectorAll('.nav-link').forEach(link => {
-            const closeMenu = () => {
-                navLinks.classList.remove('open');
-                const icon = menuToggle.querySelector('i, svg');
-                if (icon) icon.setAttribute('class', 'fas fa-bars');
-            };
-            link.addEventListener('click', closeMenu);
-            link.addEventListener('touchstart', closeMenu, { passive: true });
-        });
 
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
@@ -162,13 +154,14 @@ function initHeaderScroll() {
                 !navLinks.contains(e.target)) {
                 navLinks.classList.remove('open');
                 const icon = menuToggle.querySelector('i, svg');
-                if (icon) icon.setAttribute('class', 'fas fa-bars');
+                if (icon) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
             }
         });
     }
 }
-
-// initTimeline removed — old timeline section replaced with Innovación layout
 
 function initGlobe() {
     const container = document.getElementById('globe-container');
@@ -181,7 +174,6 @@ function initGlobe() {
     renderer.setSize(container.clientWidth, container.clientHeight);
     container.appendChild(renderer.domElement);
 
-    // Create Globe
     const geometry = new THREE.SphereGeometry(2.5, 64, 64);
     const material = new THREE.MeshPhongMaterial({
         color: 0x00e5ff,
@@ -194,7 +186,6 @@ function initGlobe() {
     const globe = new THREE.Mesh(geometry, material);
     scene.add(globe);
 
-    // Add glowing points for cities/nodes
     const pointsGeometry = new THREE.BufferGeometry();
     const pointsCount = 300;
     const positions = new Float32Array(pointsCount * 3);
@@ -215,7 +206,6 @@ function initGlobe() {
     const points = new THREE.Points(pointsGeometry, pointsMaterial);
     globe.add(points);
 
-    // Trade routes (Arcs)
     const createArc = () => {
         const curve = new THREE.CubicBezierCurve3(
             new THREE.Vector3(2 * Math.random() - 1, 2 * Math.random() - 1, 2 * Math.random() - 1).normalize().multiplyScalar(2),
@@ -223,15 +213,13 @@ function initGlobe() {
             new THREE.Vector3(3 * Math.random() - 1.5, 3 * Math.random() - 1.5, 3 * Math.random() - 1.5),
             new THREE.Vector3(2 * Math.random() - 1, 2 * Math.random() - 1, 2 * Math.random() - 1).normalize().multiplyScalar(2)
         );
-        const points = curve.getPoints(50);
-        const geometry = new THREE.BufferGeometry().setFromPoints(points);
-        const material = new THREE.LineBasicMaterial({ color: 0x00e5ff, transparent: true, opacity: 0.2 });
-        return new THREE.Line(geometry, material);
+        const pts = curve.getPoints(50);
+        const geo = new THREE.BufferGeometry().setFromPoints(pts);
+        const mat = new THREE.LineBasicMaterial({ color: 0x00e5ff, transparent: true, opacity: 0.2 });
+        return new THREE.Line(geo, mat);
     };
 
-    for (let i = 0; i < 30; i++) {
-        globe.add(createArc());
-    }
+    for (let i = 0; i < 30; i++) globe.add(createArc());
 
     const light = new THREE.PointLight(0xffffff, 2, 100);
     light.position.set(10, 10, 10);
@@ -299,8 +287,6 @@ function initHeroBackground() {
 
     function animate() {
         ctx.clearRect(0, 0, width, height);
-
-        // Draw grid
         ctx.strokeStyle = 'rgba(0, 229, 255, 0.05)';
         ctx.lineWidth = 1;
         const spacing = 50;
@@ -310,11 +296,7 @@ function initHeroBackground() {
         for (let y = 0; y < height; y += spacing) {
             ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
         }
-
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
+        particles.forEach(p => { p.update(); p.draw(); });
         requestAnimationFrame(animate);
     }
     animate();
@@ -328,18 +310,12 @@ function initWorldMapZoom() {
 
     if (!svg || !section) return;
 
-    // Zoom toward Asia / Middle East — the heart of global trade routes
-    // SVG viewBox is 2000×1000; target focal point ~(1150, 360)
-    const targetXFrac = 1150 / 2000; // 0.575
-    const targetYFrac = 360 / 1000;  // 0.360
+    const targetXFrac = 1150 / 2000;
+    const targetYFrac = 360 / 1000;
     const maxScale = 4.5;
 
-    // Set transform-origin to the focal point expressed as percentages
     svg.style.transformOrigin = `${targetXFrac * 100}% ${targetYFrac * 100}%`;
 
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Main zoom tween — tied 1-to-1 with scroll position (scrub)
     const zoomTl = gsap.timeline({
         scrollTrigger: {
             trigger: section,
@@ -350,13 +326,8 @@ function initWorldMapZoom() {
         }
     });
 
-    zoomTl.to(svg, {
-        scale: maxScale,
-        ease: 'none',
-        duration: 1
-    });
+    zoomTl.to(svg, { scale: maxScale, ease: 'none', duration: 1 });
 
-    // Overlay text fades out in the first 25 % of scroll travel
     gsap.to([tagline, scrollHint], {
         scrollTrigger: {
             trigger: section,
@@ -368,7 +339,6 @@ function initWorldMapZoom() {
         ease: 'none',
     });
 
-    // Continent fills brighten as zoom deepens for extra depth
     gsap.to('#world-map-svg .continent path', {
         scrollTrigger: {
             trigger: section,
@@ -380,7 +350,6 @@ function initWorldMapZoom() {
         ease: 'none',
     });
 
-    // Trade-route opacity rises to highlight connections while zooming
     gsap.to('#world-map-svg .trade-routes path', {
         scrollTrigger: {
             trigger: section,

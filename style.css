@@ -138,7 +138,13 @@ header.scrolled .logo {
   }
 
   .logo {
-    gap: 0.5rem !important;
+    gap: 0.75rem !important;
+    max-width: 70% !important;
+  }
+
+  .logo img {
+    transform: scale(1.1) !important;
+    margin-right: 15px !important;
   }
 
   .hero-content h1 {
@@ -169,30 +175,40 @@ header.scrolled .logo {
 
 
 
+  .logo img {
+    height: 60px !important;
+    width: auto !important;
+    transform: none !important;
+    margin-right: 8px !important;
+  }
+
   .logo span:first-child {
-    font-size: 16px !important;
+    font-size: 20px !important;
+    line-height: 1 !important;
   }
 
   .logo span:last-child {
-    font-size: 8px !important;
+    font-size: 10px !important;
+    margin-top: 2px !important;
   }
 
 
   header.scrolled {
-    top: 15px !important;
+    top: 10px !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    width: 92% !important;
-    max-width: 480px !important;
-    border-radius: 100px !important;
-    background: rgba(5, 7, 10, 0.7) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    backdrop-filter: blur(15px) !important;
+    width: 95% !important;
+    max-width: 1200px !important; /* Larger on desktop, smaller on mobile handled by width */
+    border-radius: 50px !important;
+    background: rgba(5, 7, 10, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(25px) !important;
+    z-index: 10000 !important;
+    padding: 0 !important;
   }
 
   header.scrolled nav {
-    padding-top: 0.6rem !important;
-    padding-bottom: 0.6rem !important;
+    padding: 0.4rem 1.5rem !important;
   }
 
   #home {
@@ -228,15 +244,24 @@ header.scrolled .logo {
 
 
   .logo img {
-    transform: scale(1.2) !important;
-    margin-right: 15px !important;
+    height: 60px !important;
+    width: auto !important;
+    transform: none !important;
+    margin-right: 8px !important;
   }
 
   .mobile-menu-btn {
-    display: block;
-    z-index: 100;
-    padding: 0.5rem;
-    margin-right: -0.5rem;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001 !important;
+    padding: 0.8rem;
+    margin-right: -0.8rem;
+    color: #ffffff !important;
+    font-size: 2rem !important;
+    cursor: pointer !important;
+    min-width: 44px;
+    min-height: 44px;
   }
 
   .nav-links {
@@ -263,7 +288,7 @@ header.scrolled .logo {
   .nav-links.open {
     display: flex !important;
     transform: translateY(0);
-    z-index: 9999 !important;
+    z-index: 10002 !important;
   }
 
 

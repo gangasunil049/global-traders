@@ -8,8 +8,35 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;700&display=swap"
+        rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+        function toggleMobileMenu(e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            const nav = document.querySelector('.nav-links');
+            const icon = document.querySelector('#menu-toggle i, #menu-toggle svg');
+            if (nav) {
+                nav.classList.toggle('open');
+                if (icon) {
+                    if (nav.classList.contains('open')) {
+                        icon.setAttribute('class', 'fas fa-times');
+                    } else {
+                        icon.setAttribute('class', 'fas fa-bars');
+                    }
+                }
+            }
+        }
+        // Force navigation on touch
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    window.location.href = link.getAttribute('href');
+                });
+            });
+        });
+    </script>
     <style>
         body {
             background-color: #05070a;
@@ -169,6 +196,7 @@
             .zaash-layout {
                 grid-template-columns: 1fr;
             }
+
             .zaash-input-grid {
                 grid-template-columns: 1fr;
             }
@@ -178,16 +206,22 @@
 
 <body>
     <!-- Header -->
-    <header id="header" class="fixed top-0 left-0 w-full z-50 bg-[#05070a]/80 backdrop-blur-md transition-all duration-300 scrolled">
-        <nav class="w-full max-w-[1400px] mx-auto px-6 md:px-8 py-8 flex justify-between items-center">
-            <div class="logo flex items-center gap-4 text-white" style="font-family: 'Inter', sans-serif;">
-                <img src="/logo.png" alt="Global Traders Logo" style="height: 80px; width: auto; -webkit-mask-image: url('/logo-mask.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-mode: luminance; mask-image: url('/logo-mask.png'); mask-size: contain; mask-repeat: no-repeat; mask-mode: luminance; transform: scale(1.8); transform-origin: left center; margin-right: 40px;">
+    <header id="header"
+        class="fixed top-0 left-0 w-full z-50 bg-[#05070a]/80 backdrop-blur-md transition-all duration-300 scrolled">
+        <nav class="w-full max-w-[1400px] mx-auto px-6 md:px-8 py-1 flex justify-between items-center">
+            <div class="logo flex items-center text-white" style="font-family: 'Inter', sans-serif;">
+                <img src="/logo.png" alt="Global Traders Logo"
+                    style="height: 130px; width: auto; -webkit-mask-image: url('/logo-mask.png'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-mode: luminance; mask-image: url('/logo-mask.png'); mask-size: contain; mask-repeat: no-repeat; mask-mode: luminance; transform-origin: left center; margin-right: 5px;">
                 <div class="flex flex-col justify-center">
-                    <span style="font-size: 40px; font-weight: 700; letter-spacing: 1px; line-height: 1; text-transform: uppercase;">GLOBAL TRADERS</span>
-                    <span style="font-size: 20px; letter-spacing: normal; margin-top: 2px; font-weight: 600; text-transform: uppercase; color: #cbd5e1;">Export & Import</span>
+                    <span
+                        style="font-size: 40px; font-weight: 700; letter-spacing: 1px; line-height: 1; text-transform: uppercase;">GLOBAL
+                        TRADERS</span>
+                    <span
+                        style="font-size: 20px; letter-spacing: normal; margin-top: 2px; font-weight: 600; text-transform: uppercase; color: #cbd5e1;">Export
+                        & Import</span>
                 </div>
             </div>
-            <button id="menu-toggle" class="mobile-menu-btn">
+            <button id="menu-toggle" class="mobile-menu-btn" onclick="toggleMobileMenu(event)">
                 <i class="fas fa-bars"></i>
             </button>
             <ul class="nav-links font-inter text-lg uppercase tracking-widest font-semibold flex gap-12">
@@ -205,7 +239,8 @@
         <div class="zaash-title-wrap">
             <div class="zaash-accent-line"></div>
             <h1 class="zaash-title">Get In Touch With <span style="font-weight: 400;">Global Traders</span></h1>
-            <p class="zaash-subtitle">Connect with our global trade experts for customized procurement and logistics solutions.</p>
+            <p class="zaash-subtitle">Connect with our global trade experts for customized procurement and logistics
+                solutions.</p>
         </div>
 
         <div class="zaash-layout">
@@ -243,7 +278,8 @@
                     </div>
                     <div>
                         <h3 class="zaash-item-title">Email Us</h3>
-                        <p class="zaash-item-text">Drop us an email at hello@support.com<br>and you'll receive a reply within 24 hours.</p>
+                        <p class="zaash-item-text">Drop us an email at hello@support.com<br>and you'll receive a reply
+                            within 24 hours.</p>
                     </div>
                 </div>
             </div>
@@ -285,9 +321,11 @@
 
                 <div class="footer-bottom">
                     <p>&copy; 2018 Global Traders. All rights reserved.</p>
-                    <p style="margin-top: 10px; opacity: 0.8; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                        Meet the developers 
-                        <a href="https://www.instagram.com/intellex.web?igsh=MWZyenU0bWc3M2RxOQ==" target="_blank" style="color: #2563eb; transition: color 0.3s; font-size: 1.1rem;">
+                    <p
+                        style="margin-top: 10px; opacity: 0.8; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        Meet the developers
+                        <a href="https://www.instagram.com/intellex.web?igsh=MWZyenU0bWc3M2RxOQ==" target="_blank"
+                            style="color: #2563eb; transition: color 0.3s; font-size: 1.1rem;">
                             <i class="fab fa-instagram"></i>
                         </a>
                     </p>
@@ -295,10 +333,10 @@
             </div>
         </div>
     </footer>
-    <!-- GSAP & Three.js CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js"></script>
-    <script src="main.js" type="module"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="main.js"></script>
 </body>
+
 </html>
