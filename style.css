@@ -179,12 +179,20 @@ header.scrolled .logo {
 
 
   header.scrolled {
-    top: 0 !important;
-    left: 0 !important;
-    transform: none !important;
-    width: 100% !important;
-    border-radius: 0 !important;
-    background: rgba(5, 5, 5, 0.9) !important;
+    top: 15px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 92% !important;
+    max-width: 480px !important;
+    border-radius: 100px !important;
+    background: rgba(5, 7, 10, 0.7) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(15px) !important;
+  }
+
+  header.scrolled nav {
+    padding-top: 0.6rem !important;
+    padding-bottom: 0.6rem !important;
   }
 
   #home {
@@ -238,11 +246,15 @@ header.scrolled .logo {
     left: 0;
     width: 100%;
     flex-direction: column;
-    background: rgba(5, 7, 10, 0.99);
-    backdrop-filter: blur(30px);
-    padding: 1.5rem 0;
-    gap: 1.25rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(5, 7, 10, 0.85);
+    backdrop-filter: blur(25px);
+    padding: 2rem 0;
+    gap: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    margin-top: 10px;
+    width: 92%;
+    left: 4%;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     transform: translateY(-10px);
     transition: all 0.3s ease;
@@ -251,6 +263,7 @@ header.scrolled .logo {
   .nav-links.open {
     display: flex !important;
     transform: translateY(0);
+    z-index: 9999 !important;
   }
 
 

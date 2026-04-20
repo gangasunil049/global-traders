@@ -117,12 +117,19 @@ function initHeaderScroll() {
     });
 
     if (menuToggle && navLinks) {
-        menuToggle.addEventListener('click', () => {
+        menuToggle.addEventListener('click', (e) => {
+            e.preventDefault();
             navLinks.classList.toggle('open');
-            const icon = menuToggle.querySelector('i');
+            // Support both <i> and FontAwesome's <svg> replacement
+            const icon = menuToggle.querySelector('i, svg');
             if (icon) {
-                icon.classList.toggle('fa-bars');
-                icon.classList.toggle('fa-times');
+                if (navLinks.classList.contains('open')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
             }
         });
 
@@ -130,12 +137,24 @@ function initHeaderScroll() {
         navLinks.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('open');
-                const icon = menuToggle.querySelector('i');
+                const icon = menuToggle.querySelector('i, svg');
                 if (icon) {
                     icon.classList.add('fa-bars');
                     icon.classList.remove('fa-times');
                 }
             });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!menuToggle.contains(e.target) && !navLinks.contains(e.target) && navLinks.classList.contains('open')) {
+                navLinks.classList.remove('open');
+                const icon = menuToggle.querySelector('i, svg');
+                if (icon) {
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            }
         });
     }
 }
