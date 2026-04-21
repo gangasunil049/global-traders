@@ -66,7 +66,7 @@ header {
 }
 
 header.scrolled {
-  top: 20px !important;
+  top: 10px !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
   width: 95% !important;
@@ -89,11 +89,21 @@ header.scrolled .logo {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+header.scrolled nav {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
 .logo-img {
-  height: 60px;
+  height: 75px; /* Fixed layout height keeps navbar compact */
   width: auto;
   object-fit: contain;
   mix-blend-mode: screen;
+  transform: scale(2.8); /* Heroic scale */
+  transform-origin: left center;
+  margin-right: 90px !important; /* Reduced space between logo and text */
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5));
 }
 
 .nav-links {
@@ -131,10 +141,10 @@ header.scrolled .logo {
 /* Mobile View - 991px and below */
 @media (max-width: 991px) {
   nav {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-    padding-top: 1.5rem !important;
-    padding-bottom: 1.5rem !important;
+    padding-left: 0.4rem !important;
+    padding-right: 1.5rem !important;
+    padding-top: 3.5rem !important; /* Massive top space for large logo */
+    padding-bottom: 2.5rem !important;
   }
 
   .logo {
@@ -143,17 +153,28 @@ header.scrolled .logo {
   }
 
   .logo img {
-    transform: scale(1.1) !important;
-    margin-right: 15px !important;
+    height: 60px !important; /* Slightly smaller base for better fit */
+    transform: scale(1.3) !important; /* Balanced scale to keep elements in one line */
+    transform-origin: left center;
+    margin-right: 12px !important;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    margin-top: 10px !important;
+    white-space: nowrap !important; /* Force one line */
+    overflow: visible !important;
+    max-width: 85% !important; /* Increased width to accommodate one line */
   }
 
   .hero-content h1 {
-    font-size: 3.2rem !important;
-    line-height: 1.1 !important;
+    font-size: 1.6rem !important;
+    line-height: 1.3 !important;
     white-space: normal !important;
     letter-spacing: -0.01em !important;
-    max-width: 100% !important;
-    margin: 0 auto 1.5rem !important;
+    max-width: 95% !important;
+    margin: 0 auto 0.5rem !important; /* Reduced space below heading */
     text-align: center !important;
   }
 
@@ -176,20 +197,24 @@ header.scrolled .logo {
 
 
   .logo img {
-    height: 60px !important;
+    height: 70px !important;
     width: auto !important;
-    transform: none !important;
-    margin-right: 8px !important;
+    transform: scale(1.7) !important;
+    transform-origin: left center;
+    margin-right: 15px !important;
   }
 
   .logo span:first-child {
-    font-size: 20px !important;
+    font-size: 20px !important; /* Optimized size to stay in one line */
     line-height: 1 !important;
+    font-weight: 800 !important;
+    white-space: nowrap !important;
   }
 
   .logo span:last-child {
-    font-size: 10px !important;
-    margin-top: 2px !important;
+    font-size: 11px !important;
+    margin-top: -1px !important;
+    white-space: nowrap !important;
   }
 
 
@@ -208,7 +233,10 @@ header.scrolled .logo {
   }
 
   header.scrolled nav {
-    padding: 0.4rem 1.5rem !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    padding-top: 2rem !important; /* Extra space in scrolled state */
+    padding-bottom: 1.5rem !important;
   }
 
   #home {
@@ -226,13 +254,13 @@ header.scrolled .logo {
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
-    gap: 4.5rem !important;
+    gap: 1.5rem !important; /* Tightened overall vertical gap */
     padding-bottom: 2rem !important;
   }
 
   header.scrolled nav {
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
   }
 
 
@@ -244,24 +272,48 @@ header.scrolled .logo {
 
 
   .logo img {
-    height: 60px !important;
+    height: 70px !important;
     width: auto !important;
-    transform: none !important;
-    margin-right: 8px !important;
+    transform: scale(1.7) !important;
+    transform-origin: left center;
+    margin-right: 15px !important;
   }
 
   .mobile-menu-btn {
     display: flex !important;
+    flex-direction: column;
+    justify-content: space-around;
     align-items: center;
-    justify-content: center;
+    width: 30px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
     z-index: 10001 !important;
-    padding: 0.8rem;
-    margin-right: -0.8rem;
-    color: #ffffff !important;
-    font-size: 2rem !important;
-    cursor: pointer !important;
-    min-width: 44px;
-    min-height: 44px;
+    margin-right: 1.5rem; /* Better alignment in mobile nav */
+  }
+
+  .mobile-menu-btn span {
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Hamburger to X Transformation */
+  .mobile-menu-btn.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .mobile-menu-btn.open span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  .mobile-menu-btn.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
   }
 
   .nav-links {
@@ -357,7 +409,7 @@ header.scrolled .logo {
 }
 
 .about-card-title {
-  font-size: 0.7rem; /* Smaller text for mobile */
+  font-size: 0.6rem; /* Further reduced for a cleaner look */
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -366,7 +418,7 @@ header.scrolled .logo {
 
 @media (min-width: 768px) {
   .about-card-title {
-    font-size: 1.25rem;
+    font-size: 1rem; /* Reduced from 1.25rem */
   }
 }
 
@@ -633,6 +685,11 @@ header.scrolled .logo {
 
 .p-24 {
   padding: 6rem;
+}
+
+.py-1 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .py-6 {
