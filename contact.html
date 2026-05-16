@@ -244,15 +244,78 @@
             <!-- Left Side: Form (Included to match reference exactly) -->
             <div class="zaash-form-card">
                 <h2 class="zaash-form-title">Send Us Message</h2>
-                <form action="#">
+                <form id="contactForm" action="https://formsubmit.co/support@globaltradersexim.com" method="POST">
+                    <!-- Disable Formsubmit captcha for smoother UX -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <!-- Automatically set email subject -->
+                    <input type="hidden" name="_subject" value="New submission from Global Traders Contact Form">
+                    <!-- Redirect back to contact page after submission -->
+                    <input type="hidden" name="_next" value="http://localhost:5173/contact.html">
+                    
                     <div class="zaash-input-grid">
-                        <input type="text" class="zaash-input" placeholder="Your full name">
-                        <input type="email" class="zaash-input" placeholder="Your email address">
+                        <input type="text" name="name" class="zaash-input" placeholder="Your full name" required>
+                        <input type="email" name="email" class="zaash-input" placeholder="Your email address" required>
                     </div>
-                    <input type="text" class="zaash-input" placeholder="Subject" style="margin-bottom: 20px;">
-                    <textarea class="zaash-textarea" placeholder="Write your question here.."></textarea>
+                    <input type="text" name="subject" class="zaash-input" placeholder="Subject" style="margin-bottom: 20px;" required>
+                    <textarea name="message" class="zaash-textarea" placeholder="Write your question here.." required></textarea>
                     <button type="submit" class="zaash-btn">Send Message</button>
+                    <div id="formMessage" style="display: none; margin-top: 15px; text-align: center; font-weight: 500; font-size: 15px;"></div>
                 </form>
+                <script>
+                    /* TEMPORARILY DISABLED TO ALLOW FOR EMAIL ACTIVATION
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const form = document.getElementById('contactForm');
+                        const msg = document.getElementById('formMessage');
+                        const btn = form.querySelector('button[type="submit"]');
+
+                        if (form) {
+                            form.addEventListener('submit', function(e) {
+                                e.preventDefault();
+                                btn.textContent = 'Sending...';
+                                btn.disabled = true;
+
+                                const formData = new FormData(form);
+                                const object = {};
+                                formData.forEach((value, key) => object[key] = value);
+
+                                fetch(form.action, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Accept': 'application/json'
+                                    },
+                                    body: JSON.stringify(object)
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success === "true" || data.success === true) {
+                                        msg.style.display = 'block';
+                                        msg.textContent = 'Message sent successfully!';
+                                        msg.style.color = '#4ade80'; // Green
+                                        form.reset();
+                                    } else {
+                                        msg.style.display = 'block';
+                                        msg.textContent = data.message || 'Please check your email to activate the form!';
+                                        msg.style.color = '#f87171'; // Red
+                                    }
+                                })
+                                .catch(error => {
+                                    msg.style.display = 'block';
+                                    msg.textContent = 'Oops! There was a problem submitting your form. (Make sure you activated this email on formsubmit.co)';
+                                    msg.style.color = '#f87171'; // Red
+                                })
+                                .finally(() => {
+                                    btn.textContent = 'Send Message';
+                                    btn.disabled = false;
+                                    setTimeout(() => {
+                                        msg.style.display = 'none';
+                                    }, 5000); // Hide message after 5 seconds
+                                });
+                            });
+                        }
+                    });
+                    */
+                </script>
             </div>
 
             <!-- Right Side: Contact List -->
@@ -270,12 +333,12 @@
 
                 <!-- Email Us -->
                 <div class="zaash-contact-item">
-                    <div class="zaash-icon-circle">
+                    <a href="mailto:support@globaltradersexim.com" class="zaash-icon-circle" style="text-decoration: none; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
                         <i class="fas fa-envelope"></i>
-                    </div>
+                    </a>
                     <div>
                         <h3 class="zaash-item-title">Email Us</h3>
-                        <p class="zaash-item-text">Drop us an email at support@globaltradersexim.com<br>and you'll receive a reply
+                        <p class="zaash-item-text">Drop us an email at <a href="mailto:support@globaltradersexim.com" style="color: #3b82f6; text-decoration: none; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">support@globaltradersexim.com</a><br>and you'll receive a reply
                             within 24 hours.</p>
                     </div>
                 </div>
@@ -290,11 +353,7 @@
                     <div>
                         <h2 class="footer-title">Global Traders</h2>
                         <p class="footer-text">Empowering supply chains with innovative logistics.</p>
-                        <div class="footer-socials">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-whatsapp"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                        </div>
+
                     </div>
                     <div class="footer-links-row">
                         <div>
@@ -318,14 +377,7 @@
 
                 <div class="footer-bottom">
                     <p>&copy; 2018 Global Traders. All rights reserved.</p>
-                    <p
-                        style="margin-top: 10px; opacity: 0.8; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                        Meet the developers
-                        <a href="https://www.instagram.com/intellex.web?igsh=MWZyenU0bWc3M2RxOQ==" target="_blank"
-                            style="color: #2563eb; transition: color 0.3s; font-size: 1.1rem;">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </p>
+
                 </div>
             </div>
         </div>
